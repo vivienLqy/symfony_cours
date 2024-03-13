@@ -32,4 +32,23 @@ class TestService
 
         return $product;
     }
+    public function getAllTest(): array
+    {
+        return $this->entityManager->getRepository(Test::class)->findAll();
+    }
+    public function getTestById(int $id): Test
+    {
+        return $this->entityManager->getRepository(Test::class)->find($id);
+    }
+    public function deleteTestById(int $id): string
+    {
+        $test = $this->entityManager->getRepository(Test::class)->find($id);
+        if ($test) {
+            $this->entityManager->remove($test);
+            $this->entityManager->flush();
+            return "L'élement avec l'id $id a été supprimé avec succès.";
+        } else {
+            return "Aucun élément avec l'id $id n'a été trouvé.";
+        }
+    }
 }

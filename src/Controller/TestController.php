@@ -31,4 +31,22 @@ class TestController extends AbstractController
 
         return new Response($this->serializer->serialize($this->testService->createTest($test), 'json'));
     }
+
+    #[Route('/api/products', methods: ['GET'])]
+    public function getProduct(): Response
+    {
+        return new Response($this->serializer->serialize($this->testService->getAllTest(), 'json'));
+    }
+
+    #[Route('/api/products/{id}', methods: ['GET'])]
+    public function getProductById(int $id): Response
+    {
+        return new Response($this->serializer->serialize($this->testService->getTestById($id), 'json'));
+    }
+    #[Route('/api/products/{id}', methods: ['DELETE'])]
+    public function deleteTest(int $id, TestService $testService): Response
+    {
+        $message = $testService->deleteTestById($id);
+        return new Response($message);
+    }
 }
